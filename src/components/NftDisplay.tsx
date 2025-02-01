@@ -26,6 +26,7 @@ interface Metadata {
 
 interface MintStatus {
   isMinted: boolean
+  owner?: string
 }
 
 function transformImageUrl(url: string, id: string): string {
@@ -71,7 +72,8 @@ export default function NftDisplay({ id }: NftDisplayProps) {
         if (mintResponse.ok) {
           const mintData = await mintResponse.json()
           setMintStatus({
-            isMinted: mintData.result.length > 0
+            isMinted: mintData.result.length > 0,
+            owner: mintData.result[0]?.owner
           })
         }
       } catch (err) {
@@ -105,12 +107,17 @@ export default function NftDisplay({ id }: NftDisplayProps) {
 
   return (
     <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 shadow-2xl border border-gray-700 relative">
-      {/* Add mint status label */}
+      {/* Update mint status label */}
       {mintStatus && (
         mintStatus.isMinted ? (
-          <span className="absolute top-4 right-4 px-3 py-1 rounded-full bg-green-500/10 text-green-400 border border-green-500/20 text-sm font-medium">
+          <a
+            href={`https://kas.fyi/address/${mintStatus.owner}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="absolute top-4 right-4 px-3 py-1 rounded-full bg-green-500/10 text-green-400 border border-green-500/20 hover:bg-green-500/20 transition-colors cursor-pointer text-sm font-medium"
+          >
             Minted
-          </span>
+          </a>
         ) : (
           <a
             href="https://t.me/kspr_home_bot?start=nacho"
