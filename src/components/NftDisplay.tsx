@@ -99,27 +99,29 @@ export default function NftDisplay({ id }: NftDisplayProps) {
 
   return (
     <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 shadow-2xl border border-gray-700 relative">
-      {/* Update mint status label */}
+      {/* Remove the absolute positioning and add responsive classes */}
       {mintStatus && (
-        mintStatus.isMinted ? (
-          <a
-            href={`https://kas.fyi/address/${mintStatus.owner}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="absolute top-4 right-4 px-3 py-1 rounded-full bg-green-500/10 text-green-400 border border-green-500/20 hover:bg-green-500/20 transition-colors cursor-pointer text-sm font-medium"
-          >
-            Minted
-          </a>
-        ) : (
-          <a
-            href="https://t.me/kspr_home_bot?start=nacho"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="absolute top-4 right-4 px-3 py-1 rounded-full bg-yellow-500/10 text-yellow-400 border border-yellow-500/20 hover:bg-yellow-500/20 transition-colors cursor-pointer text-sm font-medium"
-          >
-            Not Minted
-          </a>
-        )
+        <div className="hidden md:block absolute top-4 right-4">
+          {mintStatus.isMinted ? (
+            <a
+              href={`https://kas.fyi/address/${mintStatus.owner}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-3 py-1 rounded-full bg-green-500/10 text-green-400 border border-green-500/20 hover:bg-green-500/20 transition-colors cursor-pointer text-sm font-medium"
+            >
+              Minted
+            </a>
+          ) : (
+            <a
+              href="https://t.me/kspr_home_bot?start=nacho"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-3 py-1 rounded-full bg-yellow-500/10 text-yellow-400 border border-yellow-500/20 hover:bg-yellow-500/20 transition-colors cursor-pointer text-sm font-medium"
+            >
+              Not Minted
+            </a>
+          )}
+        </div>
       )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -150,13 +152,40 @@ export default function NftDisplay({ id }: NftDisplayProps) {
               <h2 className="text-2xl font-bold text-white mb-2">
                 {metadata?.name}
               </h2>
-              <div className="inline-flex items-center px-3 py-1 rounded-full bg-gray-900/80"
-                style={{
-                  border: `1px solid ${getRarityColor(rarityTier)}50`
-                }}>
-                <span className="text-sm font-semibold" style={{ color: getRarityColor(rarityTier) }}>
-                  {rarityTier}
-                </span>
+              <div className="flex flex-wrap gap-2 items-center">
+                <div className="inline-flex items-center px-3 py-1 rounded-full bg-gray-900/80"
+                  style={{
+                    border: `1px solid ${getRarityColor(rarityTier)}50`
+                  }}>
+                  <span className="text-sm font-semibold" style={{ color: getRarityColor(rarityTier) }}>
+                    {rarityTier}
+                  </span>
+                </div>
+                
+                {/* Mobile mint status */}
+                {mintStatus && (
+                  <div className="md:hidden">
+                    {mintStatus.isMinted ? (
+                      <a
+                        href={`https://kas.fyi/address/${mintStatus.owner}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center px-3 py-1 rounded-full bg-green-500/10 text-green-400 border border-green-500/20 hover:bg-green-500/20 transition-colors cursor-pointer text-sm font-medium"
+                      >
+                        Minted
+                      </a>
+                    ) : (
+                      <a
+                        href="https://t.me/kspr_home_bot?start=nacho"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center px-3 py-1 rounded-full bg-yellow-500/10 text-yellow-400 border border-yellow-500/20 hover:bg-yellow-500/20 transition-colors cursor-pointer text-sm font-medium"
+                      >
+                        Not Minted
+                      </a>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
           </div>
