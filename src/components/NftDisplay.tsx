@@ -24,6 +24,10 @@ interface Metadata {
   image: string
 }
 
+interface MintStatus {
+  isMinted: boolean
+}
+
 function transformImageUrl(url: string, id: string): string {
   if (!url) return ''
   if (url.startsWith('ipfs://')) {
@@ -35,6 +39,7 @@ function transformImageUrl(url: string, id: string): string {
 
 export default function NftDisplay({ id }: NftDisplayProps) {
   const [metadata, setMetadata] = useState<Metadata | null>(null)
+  const [mintStatus, setMintStatus] = useState<MintStatus | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
@@ -44,21 +49,31 @@ export default function NftDisplay({ id }: NftDisplayProps) {
         setLoading(true)
         setError(null)
         
-        const response = await fetch(`/api/metadata/${id}`)
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`)
+        // Fetch metadata
+        const metadataResponse = await fetch(`/api/metadata/${id}`)
+        if (!metadataResponse.ok) {
+          throw new Error(`HTTP error! status: ${metadataResponse.status}`)
         }
         
-        const data = await response.json()
-        if (data.error) {
-          throw new Error(data.error)
+        const metadataData = await metadataResponse.json()
+        if (metadataData.error) {
+          throw new Error(metadataData.error)
         }
         
-        if (data.image) {
-          data.image = transformImageUrl(data.image, id)
+        if (metadataData.image) {
+          metadataData.image = transformImageUrl(metadataData.image, id)
         }
         
-        setMetadata(data)
+        setMetadata(metadataData)
+
+        // Fetch mint status
+        const mintResponse = await fetch(`https://mainnet.krc721.stream/api/v1/krc721/mainnet/history/NACHO/${id}`)
+        if (mintResponse.ok) {
+          const mintData = await mintResponse.json()
+          setMintStatus({
+            isMinted: mintData.result.length > 0
+          })
+        }
       } catch (err) {
         const message = err instanceof Error ? err.message : 'Failed to fetch metadata'
         setError(message)
@@ -89,7 +104,25 @@ export default function NftDisplay({ id }: NftDisplayProps) {
   const rarityTier = getRarityTierFromRank(rarityInfo?.rank || 10000)
 
   return (
-    <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 shadow-2xl border border-gray-700">
+    <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 shadow-2xl border border-gray-700 relative">
+      {/* Add mint status label */}
+      {mintStatus && (
+        mintStatus.isMinted ? (
+          <span className="absolute top-4 right-4 px-3 py-1 rounded-full bg-green-500/10 text-green-400 border border-green-500/20 text-sm font-medium">
+            Minted
+          </span>
+        ) : (
+          <a
+            href="https://t.me/kspr_home_bot?start=nacho"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="absolute top-4 right-4 px-3 py-1 rounded-full bg-yellow-500/10 text-yellow-400 border border-yellow-500/20 hover:bg-yellow-500/20 transition-colors cursor-pointer text-sm font-medium"
+          >
+            Not Minted
+          </a>
+        )
+      )}
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Image Section */}
         <div className="relative bg-gray-900/90 rounded-xl overflow-hidden">
