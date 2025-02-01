@@ -90,20 +90,12 @@ export default function NftDisplay({ id }: NftDisplayProps) {
     }
   }, [id])
 
-  const getRarityTierFromRank = (rank: number): string => {
-    if (rank <= 100) return 'Legendary'
-    if (rank <= 500) return 'Epic'
-    if (rank <= 2000) return 'Rare'
-    if (rank <= 5000) return 'Uncommon'
-    return 'Common'
-  }
-
   if (loading) return <LoadingSpinner />
   if (error) return <div className="text-red-500">Error: {error}</div>
   if (!metadata) return <div>No information found for NFT #{id}</div>
 
   const rarityInfo = rarityData.nft_rarity[id]
-  const rarityTier = getRarityTierFromRank(rarityInfo?.rank || 10000)
+  const rarityTier = rarityInfo?.rarity_tier || 'Unknown'
 
   return (
     <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 shadow-2xl border border-gray-700 relative">
