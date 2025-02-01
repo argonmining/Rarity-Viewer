@@ -16,10 +16,10 @@ export interface RarityData {
         trait_rarity: number;
         weighted_average: number;
       };
-      is_special: boolean;
+      is_special: string | boolean;
       rarity_tier: string;
       rank: number;
-      trait_breakdown: Array<{
+      trait_breakdown?: Array<{
         trait_type: string;
         value: string;
         percentage: number;

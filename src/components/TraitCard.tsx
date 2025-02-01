@@ -12,7 +12,6 @@ interface TraitCardProps {
 export default function TraitCard({ trait, rarity }: TraitCardProps) {
   return (
     <div className="bg-gray-900/50 p-2.5 rounded-lg border border-gray-700/50 hover:border-gray-600/50 transition-colors">
-      {/* First row: Trait Type and Percentage */}
       <div className="flex justify-between items-center mb-1">
         <p className="text-gray-400 text-xs uppercase tracking-wider">
           {trait.trait_type}
@@ -22,7 +21,6 @@ export default function TraitCard({ trait, rarity }: TraitCardProps) {
         </span>
       </div>
       
-      {/* Second row: Value and Rarity Tag */}
       <div className="flex justify-between items-center">
         <p className="text-white text-sm font-medium truncate mr-2">
           {trait.value}
@@ -44,17 +42,11 @@ export default function TraitCard({ trait, rarity }: TraitCardProps) {
 
 function getRarityColor(tier: string): string {
   switch (tier) {
-    case 'Legendary':
-      return '#FFD700'
-    case 'Epic':
-      return '#9370DB'
-    case 'Rare':
-      return '#4169E1'
-    case 'Uncommon':
-      return '#32CD32'
-    case 'Common':
-      return '#808080'
-    default:
-      return '#FFFFFF'
+    case 'Legendary': return '#FFD700'
+    case 'Epic': return '#9370DB'
+    case 'Rare': return '#4169E1'
+    case 'Uncommon': return '#32CD32'
+    case 'Common': return '#808080'
+    default: return '#FFFFFF'
   }
 } 

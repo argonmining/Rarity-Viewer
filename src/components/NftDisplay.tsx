@@ -3,11 +3,12 @@
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { toast } from 'react-hot-toast'
-import rarityDataImport from '../../rarity_data.json'
+import type { RarityData } from '@/types/rarity'
 import TraitCard from './TraitCard'
 import LoadingSpinner from './LoadingSpinner'
-import type { RarityData } from '@/types/rarity'
 
+// Import rarity data
+import rarityDataImport from '@/data/rarity_data.json'
 const rarityData = rarityDataImport as RarityData
 
 interface NftDisplayProps {
@@ -53,7 +54,6 @@ export default function NftDisplay({ id }: NftDisplayProps) {
           throw new Error(data.error)
         }
         
-        // Transform image URL if it's an IPFS URL
         if (data.image) {
           data.image = transformImageUrl(data.image, id)
         }
@@ -167,18 +167,12 @@ export default function NftDisplay({ id }: NftDisplayProps) {
 
 function getRarityColor(tier?: string): string {
   switch (tier) {
-    case 'Legendary':
-      return '#FFD700'
-    case 'Epic':
-      return '#9370DB'
-    case 'Rare':
-      return '#4169E1'
-    case 'Uncommon':
-      return '#32CD32'
-    case 'Common':
-      return '#808080'
-    default:
-      return '#FFFFFF'
+    case 'Legendary': return '#FFD700'
+    case 'Epic': return '#9370DB'
+    case 'Rare': return '#4169E1'
+    case 'Uncommon': return '#32CD32'
+    case 'Common': return '#808080'
+    default: return '#FFFFFF'
   }
 }
 
