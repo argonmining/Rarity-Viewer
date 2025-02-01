@@ -10,15 +10,17 @@ function transformIpfsUrl(url: string, id: string): string {
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
   try {
-    if (!params?.id) {
+    const { id } = await context.params;
+
+    if (!id) {
       return NextResponse.json({ error: 'ID is required' }, { status: 400 })
     }
 
     const response = await fetch(
-      `https://cache.krc721.stream/krc721/mainnet/metadata/NACHO/${params.id}`,
+      `https://cache.krc721.stream/krc721/mainnet/metadata/NACHO/${id}`,
       { 
         cache: 'no-store',
         headers: {
@@ -34,7 +36,7 @@ export async function GET(
     const data = await response.json()
     
     if (data.image) {
-      data.image = transformIpfsUrl(data.image, params.id)
+      data.image = transformIpfsUrl(data.image, id)
     }
     
     return NextResponse.json(data)

@@ -45,9 +45,8 @@ const nextConfig: NextConfig = {
   // Optimize production builds
   poweredByHeader: false,
   reactStrictMode: true,
-  swcMinify: true,
   experimental: {
-    serverActions: true
+    serverActions: {}
   }
 };
 

@@ -2,15 +2,17 @@ import { NextRequest, NextResponse } from 'next/server'
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
   try {
-    if (!params?.id) {
+    const { id } = await context.params; // Await params
+
+    if (!id) {
       return NextResponse.json({ error: 'ID is required' }, { status: 400 })
     }
 
     const response = await fetch(
-      `https://cache.krc721.stream/krc721/mainnet/image/NACHO/${params.id}`,
+      `https://cache.krc721.stream/krc721/mainnet/image/NACHO/${id}`,
       { 
         cache: 'no-store',
         headers: {
