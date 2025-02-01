@@ -5,7 +5,7 @@ export async function GET(
   context: { params: { id: string } }
 ) {
   try {
-    const { id } = await context.params; // Await context.params
+    const { id } = context.params; // Directly access params
 
     if (!id) {
       return NextResponse.json({ error: 'ID is required' }, { status: 400 })
