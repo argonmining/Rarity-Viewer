@@ -11,8 +11,8 @@ interface TraitCardProps {
 
 export default function TraitCard({ trait, rarity }: TraitCardProps) {
   return (
-    <div className="bg-gray-900/50 p-2.5 rounded-lg border border-gray-700/50 hover:border-gray-600/50 transition-colors">
-      <div className="flex justify-between items-center mb-1">
+    <div className="bg-gray-900/50 p-3.5 rounded-lg border border-gray-700/50 hover:border-gray-600/50 transition-colors">
+      <div className="flex justify-between items-center mb-1.5">
         <p className="text-gray-400 text-xs uppercase tracking-wider">
           {trait.trait_type}
         </p>

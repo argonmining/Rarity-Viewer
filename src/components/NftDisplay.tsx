@@ -209,8 +209,10 @@ export default function NftDisplay({ id }: NftDisplayProps) {
 
           {/* Traits Grid */}
           <div>
-            <h3 className="text-sm font-medium text-gray-400 uppercase tracking-wider mb-3">Traits</h3>
-            <div className="grid grid-cols-2 gap-2">
+            <h3 className="text-sm font-medium text-gray-400 uppercase tracking-wider mb-2.5">
+              Traits
+            </h3>
+            <div className="grid grid-cols-2 gap-2.5">
               {metadata?.attributes.map((trait) => (
                 <TraitCard
                   key={trait.trait_type}
