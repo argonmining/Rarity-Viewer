@@ -104,7 +104,7 @@ export default function NftDisplay({ id }: NftDisplayProps) {
         <div className="hidden md:block absolute top-4 right-4">
           {mintStatus.isMinted ? (
             <a
-              href={`https://kas.fyi/address/${mintStatus.owner}`}
+              href={`https://nft.katscan.xyz/nft/address/${mintStatus.owner}`}
               target="_blank"
               rel="noopener noreferrer"
               className="px-3 py-1 rounded-full bg-green-500/10 text-green-400 border border-green-500/20 hover:bg-green-500/20 transition-colors cursor-pointer text-sm font-medium"
@@ -167,7 +167,7 @@ export default function NftDisplay({ id }: NftDisplayProps) {
                   <div className="md:hidden">
                     {mintStatus.isMinted ? (
                       <a
-                        href={`https://kas.fyi/address/${mintStatus.owner}`}
+                        href={`https://nft.katscan.xyz/nft/address/${mintStatus.owner}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center px-3 py-1 rounded-full bg-green-500/10 text-green-400 border border-green-500/20 hover:bg-green-500/20 transition-colors cursor-pointer text-sm font-medium"
