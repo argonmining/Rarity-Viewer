@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import SearchBar from '@/components/SearchBar'
 import NftDisplay from '@/components/NftDisplay'
+import NftList from '@/components/NftList'
 import { toast } from 'react-hot-toast'
 
 export default function Home() {
@@ -32,6 +33,8 @@ export default function Home() {
         <SearchBar onSearch={handleSearch} />
         
         {searchedId && <NftDisplay id={searchedId} />}
+        
+        <NftList onSelectNft={handleSearch} />
       </div>
     </main>
   )
