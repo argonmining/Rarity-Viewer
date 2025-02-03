@@ -133,7 +133,9 @@ export default function NftList({ onSelectNft }: NftListProps) {
         <div 
           key={category} 
           className="w-full"
-          ref={el => dropdownRefs.current[category] = el}
+          ref={(el: HTMLDivElement | null) => {
+            dropdownRefs.current[category] = el
+          }}
         >
           <label className="block text-sm font-medium text-gray-400 mb-2">
             {category}
